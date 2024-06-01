@@ -174,7 +174,8 @@ BenchmarkTest/multi-thread/EmbedMutex/Read-12           1000000000              
 ```
 
 It is `5.717` performance degradation.
-Having `sync.Mutex` as a pointer or having it encapsulated into another structure does not create performance drop:
+
+But having `sync.Mutex` as a pointer or encapsulated into another structure does not create performance drop:
 ```
 BenchmarkTest/multi-thread/PtrMutex/Read-12             1000000000               0.4107 ns/op          0 B/op          0 allocs/op
 BenchmarkTest/multi-thread/EmbedMutex/Read-12           1000000000               0.4036 ns/op          0 B/op          0 allocs/op
