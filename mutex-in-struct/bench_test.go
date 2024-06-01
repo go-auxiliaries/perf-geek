@@ -1,7 +1,7 @@
 package main_test
 
 import (
-	"github.com:go-auxiliaries/perf-geek/mutex-in-struct/code"
+	"github.com/go-auxiliaries/perf-geek/mutex-in-struct/code"
 	"testing"
 )
 
@@ -12,15 +12,6 @@ func BenchmarkTest(b *testing.B) {
 		})
 		b.Run("NoMutex", func(b *testing.B) {
 			runSingleThreadTest[*code.NoMutex](b)
-		})
-		b.Run("PtrMutex", func(b *testing.B) {
-			runSingleThreadTest[*code.PtrMutex](b)
-		})
-		b.Run("LikeMutex", func(b *testing.B) {
-			runSingleThreadTest[*code.LikeMutex](b)
-		})
-		b.Run("EmbedMutex", func(b *testing.B) {
-			runSingleThreadTest[*code.EmbedMutex](b)
 		})
 	})
 
@@ -39,6 +30,9 @@ func BenchmarkTest(b *testing.B) {
 		})
 		b.Run("EmbedMutex", func(b *testing.B) {
 			runMultiThreadTest[*code.EmbedMutex](b)
+		})
+		b.Run("WithIntMutex", func(b *testing.B) {
+			runMultiThreadTest[*code.WithIntMutex](b)
 		})
 	})
 }

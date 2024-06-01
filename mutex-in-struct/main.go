@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com:go-auxiliaries/perf-geek/mutex-in-struct/code"
+	"github.com/go-auxiliaries/perf-geek/mutex-in-struct/code"
 )
 
 func main() {

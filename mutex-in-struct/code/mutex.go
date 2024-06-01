@@ -6,8 +6,8 @@ import (
 )
 
 type Mutex struct {
-	val atomic.Pointer[State]
 	mut sync.RWMutex
+	val atomic.Pointer[State]
 }
 
 func (d *Mutex) Init() *Mutex {
