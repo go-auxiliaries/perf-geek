@@ -171,3 +171,68 @@ Weirdest thing out of all is that adding an `int` to the structure makes perform
 ```
 BenchmarkTest/multi-thread/WithIntMutex/Read-12         1000000000               0.4017 ns/op          0 B/op          0 allocs/op
 ```
+
+
+#### ASM Code
+
+```go
+	go func() {
+		mut.Read()
+	}()
+```
+
+Compiles to:
+```asm
+	go func() {
+  0x45d760		493b6610		CMPQ SP, 0x10(R14)	
+  0x45d764		7627			JBE 0x45d78d		
+  0x45d766		55			PUSHQ BP		
+  0x45d767		4889e5			MOVQ SP, BP		
+  0x45d76a		4883ec10		SUBQ $0x10, SP		
+  0x45d76e		488b4208		MOVQ 0x8(DX), AX	
+	return *d.val.Load()
+  0x45d772		8400			TESTB AL, 0(AX)		
+		nomut.Read()
+  0x45d774		90			NOPL			
+	return *d.val.Load()
+  0x45d775		488d1d04c00200		LEAQ sync/atomic..dict.Pointer[github.com/go-auxiliaries/perf-geek/mutex-in-struct/code.State](SB), BX														
+  0x45d77c		0f1f4000		NOPL 0(AX)																									
+  0x45d780		e8dbfdffff		CALL sync/atomic.(*Pointer[go.shape.struct { github.com/go-auxiliaries/perf-geek/mutex-in-struct/code.fruits []string; github.com/go-auxiliaries/perf-geek/mutex-in-struct/code.numberOfApples int }]).Load(SB)	
+  0x45d785		8400			TESTB AL, 0(AX)																									
+	}()
+  0x45d787		4883c410		ADDQ $0x10, SP		
+  0x45d78b		5d			POPQ BP			
+  0x45d78c		c3			RET
+```
+
+```go
+	go func() {
+        nomut.Read()
+    }()
+```
+
+Compiles to:
+```go
+	go func() {
+  0x45d7a0		493b6610		CMPQ SP, 0x10(R14)	
+  0x45d7a4		7627			JBE 0x45d7cd		
+  0x45d7a6		55			PUSHQ BP		
+  0x45d7a7		4889e5			MOVQ SP, BP		
+  0x45d7aa		4883ec10		SUBQ $0x10, SP		
+  0x45d7ae		488b4208		MOVQ 0x8(DX), AX	
+	return *d.val.Load()
+  0x45d7b2		8400			TESTB AL, 0(AX)		
+  0x45d7b4		4883c018		ADDQ $0x18, AX		
+		mut.Read()
+  0x45d7b8		90			NOPL			
+	return *d.val.Load()
+  0x45d7b9		488d1dc0bf0200		LEAQ sync/atomic..dict.Pointer[github.com/go-auxiliaries/perf-geek/mutex-in-struct/code.State](SB), BX														
+  0x45d7c0		e89bfdffff		CALL sync/atomic.(*Pointer[go.shape.struct { github.com/go-auxiliaries/perf-geek/mutex-in-struct/code.fruits []string; github.com/go-auxiliaries/perf-geek/mutex-in-struct/code.numberOfApples int }]).Load(SB)	
+  0x45d7c5		8400			TESTB AL, 0(AX)																									
+	}()
+  0x45d7c7		4883c410		ADDQ $0x10, SP		
+  0x45d7cb		5d			POPQ BP			
+  0x45d7cc		c3			RET
+```
+
+So, no difference on the bytecode

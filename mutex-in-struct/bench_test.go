@@ -25,9 +25,6 @@ func BenchmarkTest(b *testing.B) {
 		b.Run("PtrMutex", func(b *testing.B) {
 			runMultiThreadTest[*code.PtrMutex](b)
 		})
-		b.Run("LikeMutex", func(b *testing.B) {
-			runMultiThreadTest[*code.LikeMutex](b)
-		})
 		b.Run("EmbedMutex", func(b *testing.B) {
 			runMultiThreadTest[*code.EmbedMutex](b)
 		})

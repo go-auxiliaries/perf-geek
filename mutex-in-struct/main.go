@@ -5,19 +5,16 @@ import (
 )
 
 func main() {
-	tmp := code.Mutex{}
-	tmp.Read()
-	tmp2 := code.NoMutex{}
-	tmp2.Read()
+	mut := (*code.Mutex)(nil).Init()
+	mut.Read()
+	nomut := (*code.NoMutex)(nil).Init()
+	nomut.Read()
 
 	go func() {
-		tmp := code.Mutex{}
-		tmp.Read()
+		mut.Read()
 	}()
 
 	go func() {
-		tmp := code.NoMutex{}
-		tmp.Read()
+		nomut.Read()
 	}()
-
 }
