@@ -1,7 +1,7 @@
 package main_test
 
 import (
-	"github.com/go-auxiliaries/benchs/async/mutex-in-struct/code"
+	"github.com:go-auxiliaries/perf-geek/mutex-in-struct/code"
 	"testing"
 )
 
