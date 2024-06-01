@@ -1,0 +1,10 @@
+# Test binary, built with `go test -c`
+*.test
+
+*.out
+go.work
+go.work.sum
+
+# env files
+.env
+.idea
