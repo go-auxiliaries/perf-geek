@@ -5,9 +5,9 @@ If two operations are running at the same time, they won't interfere with each o
 
 ## Solution
 
-### 1. RW Lock (StateMutex) 
+### 1. RW Lock (StateMutex)
 ```golang
-type StateMutex struct {
+type StateMutex struct {       
 	state State
 	mu    sync.RWMutex
 }
