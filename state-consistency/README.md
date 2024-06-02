@@ -75,7 +75,6 @@ type StateAtomicFixed struct {
 func (d *StateAtomicFixed) Init() *StateAtomicFixed {
 	tmp := StateAtomicFixed{}
 	tmp.val.Store(&State{})
-	//tmp.exclusiveLock = &sync.RWMutex{}
 	return &tmp
 }
 

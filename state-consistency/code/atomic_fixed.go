@@ -7,13 +7,13 @@ import (
 
 type StateAtomicFixed struct {
 	val           atomic.Pointer[State]
-	exclusiveLock sync.RWMutex
+	exclusiveLock *sync.RWMutex // it is pointer because of https://github.com/golang/go/issues/67764
 }
 
 func (d *StateAtomicFixed) Init() *StateAtomicFixed {
 	tmp := StateAtomicFixed{}
 	tmp.val.Store(&State{})
-	//tmp.exclusiveLock = &sync.RWMutex{}
+	tmp.exclusiveLock = &sync.RWMutex{}
 	return &tmp
 }
 
