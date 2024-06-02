@@ -5,6 +5,8 @@ structure leads to 3 times read performance degradation for `atomic.Pointer.Load
 
 go version: `go version go1.22.3 linux/amd64`
 
+Issue on golang repo: https://github.com/golang/go/issues/67764
+
 ## Solutions
 
 ### 1. Mutex on the structure (problematic case)
