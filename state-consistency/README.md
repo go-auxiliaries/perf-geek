@@ -99,7 +99,7 @@ func (d *StateAtomicFixed) runAtomically(body func(State) *State) {
 }
 ```
 
-### Results
+## Results
 ```
 goos: linux
 goarch: amd64
@@ -174,9 +174,9 @@ ok      github.com/go-auxiliaries/benchs/async/state-consistency        54.004s
 ?       github.com/go-auxiliaries/benchs/async/state-consistency/code   [no test files]
 ```
 
-### Summary
+## Summary
 
-#### Read flow
+### Read flow
 
 You can see that mutex implementation takes `6 times` slower in single-thread read workload:
 ```
@@ -192,7 +192,7 @@ BenchmarkDataSync/StateAtomicFixed/multi-thread/ReadState-12        1000000000  
 BenchmarkDataSync/StateAtomic/multi-thread/ReadState-12             1000000000               0.5686 ns/op          0 B/op          0 allocs/op
 ```
 
-#### Write flow
+### Write flow
 
 For single-thread write workload `atomic` implementations are at least `1.5 times` slower.
 ```
@@ -213,7 +213,7 @@ Worth to mention that due to the nature of `atomic` implementation it creates st
 which is not the case for `mutex` implementation, because it writes into the state.
 As expected, the best performance over `atomic` implementations is shown by `StateAtomicFixed`, which uses `mutex` to reduce state submitting collisions, and as result wasted allocations.
 
-#### Mixed flow
+### Mixed flow
 
 Obvious disbalance in read and write performance makes it necessary to find a `rate` between read and write, so that you could pick between `atomic` and `mutex` implementations.
 Up until write/read rate `1:20` `StateAtomicFixed` is the best choice.
@@ -230,7 +230,7 @@ BenchmarkDataSync/StateAtomicFixed/multi-thread/Mixed-1/9-12         4351668    
 BenchmarkDataSync/StateAtomic/multi-thread/Mixed-1/9-12              2639113               454.3 ns/op          1274 B/op          6 allocs/op
 ```
 
-### Results
+## Conclusion
 
 Over all `atomic` implementations `StateAtomicFixed` is showed best results, without any downsides.
 Mutex implementation is preferable for write-dominated workloads, starting from around `1:20` write/read rate.
