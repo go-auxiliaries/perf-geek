@@ -78,7 +78,7 @@ func (d *WithIntMutex) Read() State {
 }
 ```
 
-### Results
+## Results
 
 ```
 goos: linux
@@ -132,7 +132,7 @@ PASS
 ok      github.com/go-auxiliaries/perf-geek/mutex-in-struct     16.129s
 ```
 
-### Summary
+## Summary
 
 `sync.Pointer.Store` operation is not affected:
 ```
@@ -175,7 +175,7 @@ BenchmarkTest/multi-thread/WithIntMutex/Read-12         1000000000              
 ```
 
 
-#### ASM Code
+### ASM Code
 
 ```go
 	go func() {
@@ -238,3 +238,7 @@ Compiles to:
 ```
 
 So, no difference on the bytecode
+
+### TODO
+
+Generate low level performance metrics, cache misses, https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-0/cpu-metrics-reference.html
