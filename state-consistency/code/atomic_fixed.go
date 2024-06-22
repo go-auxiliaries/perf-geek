@@ -7,14 +7,12 @@ import (
 
 type StateAtomicFixed struct {
 	val           atomic.Pointer[State]
-	exclusiveLock *sync.RWMutex // it is pointer because of https://github.com/golang/go/issues/67764
+	_             [32]byte // To split atomic.Pointer and sync.RWMutex apart to avoid performance degradation https://github.com/golang/go/issues/67764
+	exclusiveLock sync.RWMutex
 }
 
 func (d *StateAtomicFixed) Init() *StateAtomicFixed {
-	tmp := StateAtomicFixed{}
-	tmp.val.Store(&State{})
-	tmp.exclusiveLock = &sync.RWMutex{}
-	return &tmp
+	return &StateAtomicFixed{}
 }
 
 func (d *StateAtomicFixed) runAtomically(body func(State) *State) {
@@ -22,7 +20,17 @@ func (d *StateAtomicFixed) runAtomically(body func(State) *State) {
 	for {
 		d.exclusiveLock.RLock()
 		orig := d.val.Load()
-		if d.val.CompareAndSwap(orig, body(*orig)) {
+		var newVal *State
+		if orig == nil {
+			newVal = body(State{})
+		} else {
+			newVal = body(*orig)
+		}
+		if newVal == nil {
+			d.exclusiveLock.RUnlock()
+			return
+		}
+		if d.val.CompareAndSwap(orig, newVal) {
 			d.exclusiveLock.RUnlock()
 			return
 		}
@@ -30,7 +38,16 @@ func (d *StateAtomicFixed) runAtomically(body func(State) *State) {
 		x++
 		if x > 3 {
 			d.exclusiveLock.Lock()
-			d.val.Store(body(*orig))
+			if orig == nil {
+				newVal = body(State{})
+			} else {
+				newVal = body(*orig)
+			}
+			if newVal == nil {
+				d.exclusiveLock.Unlock()
+				return
+			}
+			d.val.Store(newVal)
 			d.exclusiveLock.Unlock()
 			return
 		}
@@ -48,5 +65,9 @@ func (d *StateAtomicFixed) AddFruit(fruit string) {
 }
 
 func (d *StateAtomicFixed) GetState() State {
-	return *d.val.Load()
+	val := d.val.Load()
+	if val == nil {
+		return State{}
+	}
+	return *val
 }
