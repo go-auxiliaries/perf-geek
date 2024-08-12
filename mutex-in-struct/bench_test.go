@@ -37,7 +37,6 @@ func BenchmarkTest(b *testing.B) {
 type objectUnderTest[T any] interface {
 	Init() T
 	Read() code.State
-	ReadValueRcvr() code.State
 	Write(state code.State)
 }
 

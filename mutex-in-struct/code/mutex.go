@@ -20,10 +20,6 @@ func (d *Mutex) Read() State {
 	return *d.val.Load()
 }
 
-func (d Mutex) ReadValueRcvr() State {
-	return *d.val.Load()
-}
-
 func (d *Mutex) Write(st State) {
 	d.val.Store(&st)
 }

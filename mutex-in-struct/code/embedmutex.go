@@ -24,10 +24,6 @@ func (d *EmbedMutex) Read() State {
 	return *d.val.Load()
 }
 
-func (d EmbedMutex) ReadValueRcvr() State {
-	return *d.val.Load()
-}
-
 func (d *EmbedMutex) Write(st State) {
 	d.val.Store(&st)
 }

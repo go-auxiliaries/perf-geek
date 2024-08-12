@@ -18,10 +18,6 @@ func (d *NoMutex) Read() State {
 	return *d.val.Load()
 }
 
-func (d NoMutex) ReadValueRcvr() State {
-	return *d.val.Load()
-}
-
 func (d *NoMutex) Write(st State) {
 	d.val.Store(&st)
 }

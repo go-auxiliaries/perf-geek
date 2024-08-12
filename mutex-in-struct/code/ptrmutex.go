@@ -21,10 +21,6 @@ func (d *PtrMutex) Read() State {
 	return *d.val.Load()
 }
 
-func (d PtrMutex) ReadValueRcvr() State {
-	return *d.val.Load()
-}
-
 func (d *PtrMutex) Write(st State) {
 	d.val.Store(&st)
 }
