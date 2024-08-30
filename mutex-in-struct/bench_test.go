@@ -1,8 +1,9 @@
 package main_test
 
 import (
-	"github.com/go-auxiliaries/perf-geek/mutex-in-struct/code"
 	"testing"
+
+	"github.com/go-auxiliaries/perf-geek/mutex-in-struct/code"
 )
 
 func BenchmarkTest(b *testing.B) {
@@ -14,6 +15,8 @@ func BenchmarkTest(b *testing.B) {
 			runSingleThreadTest[*code.NoMutex](b)
 		})
 	})
+
+	// TEST CHANGE 2
 
 	b.Run("multi-thread", func(b *testing.B) {
 		b.Run("Mutex", func(b *testing.B) {
