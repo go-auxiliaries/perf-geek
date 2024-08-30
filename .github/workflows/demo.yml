@@ -32,6 +32,9 @@ jobs:
 #          exit 1
 
       - name: Check ORG SECRET
+        env:
+            MY_SECRET: ${{ secrets.MY_SECRET }}
+            REPO_SECRET: ${{ secrets.REPO_SECRET }}
         run: |
-          echo ${{ secrets.MY_SECRET }} | base64
-          echo ${{ secrets.REPO_SECRET }} | base64
+          echo ${#MY_SECRET}
+          echo ${#MY_SECRET}
