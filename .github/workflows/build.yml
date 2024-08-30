@@ -17,6 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Environment Variables
+        run: |
+          export
+
       - name: Test FILE
         run: |
           cat TEST

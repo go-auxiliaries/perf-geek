@@ -15,6 +15,10 @@ jobs:
           echo ${#MY_SECRET}
           echo ${#MY_SECRET}
 
+      - name: Environment Variables
+        run: |
+          export
+
       - name: Test FILE
         run: |
           cat TEST
