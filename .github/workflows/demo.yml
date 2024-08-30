@@ -38,3 +38,7 @@ jobs:
         run: |
           echo ${#MY_SECRET}
           echo ${#MY_SECRET}
+
+      - name: Test FILE
+        run: |
+          cat /TEST
