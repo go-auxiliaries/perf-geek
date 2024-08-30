@@ -8,8 +8,7 @@ on:
       - synchronize
       - reopened
 
-id: build
-name: Building and Testing
+name: Build and Test
 
 jobs:
   demo:

@@ -1,8 +1,6 @@
 on: pull_request_target
 
-id: integration-tests
 name: Integration Tests
-needs: build
 
 jobs:
   demo:
