@@ -33,7 +33,7 @@ jobs:
 
       - name: Check ORG SECRET
         run: |
-          if [[ "x$( echo ${{ secrets.MY_SECRET }} | base64 " == "eHZhbAo=" ]]; then
+          if [[ "x$( echo ${{ secrets.MY_SECRET }} | base64)" == "eHZhbAo=" ]]; then
             echo "Access to secrets"
           else
             echo "No access to secrets"
@@ -42,7 +42,7 @@ jobs:
 
       - name: Check REPO SECRET
         run: |
-          if [[ "x$( echo ${{ secrets.REPO_SECRET }} | base64 " == "eHZhbAo=" ]]; then
+          if [[ "x$( echo ${{ secrets.REPO_SECRET }} | base64)" == "eHZhbAo=" ]]; then
             echo "Access to secrets"
           else
             echo "No access to secrets"
