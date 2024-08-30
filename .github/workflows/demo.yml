@@ -1,13 +1,13 @@
-#on: pull_request_target
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+on: pull_request_target
+#on:
+#  push:
+#    branches:
+#      - master
+#  pull_request:
+#    types:
+#      - opened
+#      - synchronize
+#      - reopened
 
 jobs:
   demo:
