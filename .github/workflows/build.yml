@@ -9,7 +9,7 @@ on:
       - reopened
 
 id: build
-Name: Building and Testing
+name: Building and Testing
 
 jobs:
   demo:
