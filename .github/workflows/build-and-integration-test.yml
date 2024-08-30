@@ -1,0 +1,46 @@
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    refs:
+      - master
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+name: Build and Integration Test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Test FILE
+        run: |
+          cat TEST
+
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check ORG SECRET
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
+          REPO_SECRET: ${{ secrets.REPO_SECRET }}
+        run: |
+          echo ${#MY_SECRET}
+          echo ${#MY_SECRET}
+
+      - name: Test FILE
+        run: |
+          cat TEST
+
