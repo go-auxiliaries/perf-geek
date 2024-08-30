@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+id: build
+Name: Building and Testing
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Test FILE
+        run: |
+          cat /TEST

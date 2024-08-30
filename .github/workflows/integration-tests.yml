@@ -1,0 +1,18 @@
+on: pull_request_target
+
+id: integration-tests
+name: Integration Tests
+needs: build
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check ORG SECRET
+        env:
+            MY_SECRET: ${{ secrets.MY_SECRET }}
+            REPO_SECRET: ${{ secrets.REPO_SECRET }}
+        run: |
+          echo ${#MY_SECRET}
+          echo ${#MY_SECRET}
