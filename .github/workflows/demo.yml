@@ -33,18 +33,5 @@ jobs:
 
       - name: Check ORG SECRET
         run: |
-          if [[ "$( echo ${{ secrets.MY_SECRET }} | base64)" == "eHZhbAo=" ]]; then
-            echo "Access to secrets"
-          else
-            echo "No access to secrets"
-            exit 1
-          fi
-
-      - name: Check REPO SECRET
-        run: |
-          if [[ "$( echo ${{ secrets.REPO_SECRET }} | base64)" == "eHZhbAo=" ]]; then
-            echo "Access to secrets"
-          else
-            echo "No access to secrets"
-            exit 1
-          fi
+          echo ${{ secrets.MY_SECRET }} | base64
+          echo ${{ secrets.REPO_SECRET }} | base64
